@@ -119,7 +119,10 @@ class RoomObject:
         self.room.set_timer(ticks, function_call)
 
     def set_direction(self, angle: int, speed: int):
-        if angle < 0:
+        self.x_speed = speed * math.cos(math.radians(angle % 360))
+        self.y_speed = (speed * math.sin(math.radians(angle % 360))) * -1
+        
+        """if angle < 0:
             pass
         elif angle == 0:
             self.x_speed = speed
@@ -143,7 +146,7 @@ class RoomObject:
             self.y_speed = -speed
         elif angle < 360:
             self.x_speed, self.y_speed = self._get_direction(angle - 270, speed)
-            self.x_speed, self.y_speed = self.y_speed, -self.x_speed
+            self.x_speed, self.y_speed = self.y_speed, -self.x_speed"""
 
     @staticmethod
     def _get_direction(angle: int, speed: int):
@@ -188,12 +191,12 @@ class RoomObject:
 
     def rotate(self, angle: int):
 
-        if self.curr_rotation > 360:
+        """if self.curr_rotation > 360:
             self.curr_rotation = self.curr_rotation - 360
         elif self.curr_rotation < 0:
-            self.curr_rotation = 350 - self.curr_rotation
+            self.curr_rotation = 350 - self.curr_rotation"""
 
-        self.curr_rotation = self.angle = angle + self.curr_rotation
+        self.curr_rotation = self.angle = (angle + self.curr_rotation) % 360
 
         self.image = pygame.transform.rotate(self.image_orig, self.angle)
 
